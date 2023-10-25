@@ -13,7 +13,7 @@ import ToDoItem from "./ToDoItem";
 import { useState, useEffect } from "react";
 import { v4 as uuid } from "uuid";
 import ToDoForm from "./ToDoForm";
-import { IconButton } from "@mui/material";
+import ToDoModal from "./ToDoModal";
 
 const StyledFab = styled(Fab)({
   position: "absolute",
@@ -61,7 +61,7 @@ export default function AppNavBar() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Paper elevation={7} square sx={{ pb: "50px" }}>
+      <Paper elevation={7} square sx={{ pb: "50px", mb: "50px" }}>
         <Typography
           variant="h5"
           gutterBottom
@@ -85,7 +85,8 @@ export default function AppNavBar() {
       <AppBar position="fixed" color="primary" sx={{ top: "auto", bottom: 0 }}>
         <Toolbar>
           <StyledFab color="secondary" aria-label="add">
-            <AddIcon />
+            {/* <AddIcon /> */}
+            <ToDoModal />
           </StyledFab>
           <Box sx={{ flexGrow: 1 }} />
         </Toolbar>

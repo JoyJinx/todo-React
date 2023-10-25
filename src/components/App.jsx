@@ -1,5 +1,5 @@
 import { CssBaseline } from "@mui/material";
-import "./App.css";
+import "../styles/App.css";
 import AppNavBar from "./AppNavBar";
 
 function App() {
