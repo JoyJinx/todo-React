@@ -1,102 +1,81 @@
-import * as React from "react";
 import { styled } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Fab from "@mui/material/Fab";
-import List from "@mui/material/List";
-import AddIcon from "@mui/icons-material/Add";
 import ToDoItem from "./ToDoItem";
 import { useState, useEffect } from "react";
-import { v4 as uuid } from "uuid";
-import ToDoForm from "./ToDoForm";
 import ToDoModal from "./ToDoModal";
+import { useSelector } from "react-redux";
+import { AnimatePresence, motion } from "framer-motion";
+import { Container } from "@mui/material";
 
 const StyledFab = styled(Fab)({
   position: "absolute",
   zIndex: 1,
-  top: -30,
-  left: 0,
+  top: -50,
+  left: 800,
   right: 0,
-  margin: "0 auto",
+  margin: "auto auto",
 });
 
-const getInitialData = () => {
-  const data = JSON.parse(localStorage.getItem("todos"));
-  if (!data) return [];
-  return data;
-};
-
 export default function AppNavBar() {
-  const [todos, setTodos] = useState(getInitialData);
+  const [open, setOpen] = useState(false);
+  const todoList = useSelector((state) => state.todos.todoList);
 
-  useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
-
-  const removeToDo = (id) => {
-    setTodos((prevTodos) => {
-      return prevTodos.filter((x) => x.id !== id);
-    });
+  const container = {
+    hidden: { opacity: 1 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
   };
-
-  const toggleToDo = (id) => {
-    setTodos((prevTodos) => {
-      return prevTodos.map((x) => {
-        if (x.id === id) return { ...x, finished: !x.finished };
-        else return x;
-      });
-    });
-  };
-
-  const addToDo = (text) => {
-    setTodos((prevTodos) => {
-      return [...prevTodos, { id: uuid(), text: text, finished: false }];
-    });
+  const child = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+    },
   };
 
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <Paper elevation={7} square sx={{ pb: "50px", mb: "50px" }}>
-        <Typography
-          variant="h5"
-          gutterBottom
-          component="div"
-          sx={{ p: 2, pb: 0 }}
-        >
-          Todos
-        </Typography>
-        <List sx={{ mb: 2 }}>
-          {todos.map((todo) => (
-            <React.Fragment key={todo.id}>
-              <ToDoItem
-                item={todo}
-                remove={() => removeToDo(todo.id)}
-                toggle={() => toggleToDo(todo.id)}
-              />
-            </React.Fragment>
-          ))}
-        </List>
-      </Paper>
-      <AppBar position="fixed" color="primary" sx={{ top: "auto", bottom: 0 }}>
-        <Toolbar>
-          <StyledFab color="secondary" aria-label="add">
-            {/* <AddIcon /> */}
-            <ToDoModal />
-          </StyledFab>
-          <Box sx={{ flexGrow: 1 }} />
-        </Toolbar>
-      </AppBar>
-      <List
-        dense
-        sx={{ width: "100%", maxWidth: 480, bgcolor: "background.paper" }}
+    <Container>
+      <Typography
+        variant="h4"
+        gutterBottom
+        component="div"
+        sx={{ p: 2, pb: 0 }}
       >
-        <ToDoForm add={addToDo} />
-      </List>
-    </React.Fragment>
+        Todos
+      </Typography>
+      <motion.div variants={container} initial="hidden" animate="visible">
+        <Paper elevation={7} square={true} sx={{ mb: "50px" }}>
+          <AnimatePresence>
+            {todoList && todoList.length > 0 ? (
+              todoList.map((todo) => (
+                <motion.div key={todo.id} variants={child}>
+                  <ToDoItem key={todo.id} item={todo} />
+                </motion.div>
+              ))
+            ) : (
+              <motion.p variants={child}>Nothing to do!</motion.p>
+            )}
+          </AnimatePresence>
+        </Paper>
+      </motion.div>
+      {/* <AppBar position="fixed" color="primary" sx={{ top: "auto", bottom: 0 }}> */}
+      <Toolbar>
+        <StyledFab color="secondary" aria-label="add">
+          <ToDoModal type="add" modal={open} setModal={setOpen} />
+        </StyledFab>
+        <Box sx={{ flexGrow: 1 }} />
+      </Toolbar>
+      {/* </AppBar> */}
+    </Container>
   );
 }
