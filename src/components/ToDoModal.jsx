@@ -120,11 +120,13 @@ export default function ToDoModal({ type, modal, setModal, todo }) {
   return (
     <div>
       <Tooltip title={type === "add" ? "New Task" : "Edit Task"}>
-        {type === "add" ? (
-          <AddIcon onClick={handleOpen} />
-        ) : (
-          <EditIcon onClick={handleOpen} />
-        )}
+        <div style={{ display: "flex", alignItems: "center" }}>
+          {type === "add" ? (
+            <AddIcon onClick={handleOpen} />
+          ) : (
+            <EditIcon onClick={handleOpen} />
+          )}
+        </div>
       </Tooltip>
       {console.log(type)}
       <Modal

@@ -44,7 +44,7 @@ export default function AppNavBar() {
   };
 
   return (
-    <Container>
+    <div className="container">
       <Typography
         variant="h4"
         gutterBottom
@@ -76,6 +76,6 @@ export default function AppNavBar() {
         <Box sx={{ flexGrow: 1 }} />
       </Toolbar>
       {/* </AppBar> */}
-    </Container>
+    </div>
   );
 }

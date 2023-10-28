@@ -27,29 +27,7 @@ export default function ToDoItem({ item }) {
     setUpdate(true);
   };
   return (
-    <ListItem
-      secondaryAction={
-        <div className="todoIcons">
-          <IconButton
-            edge="end"
-            aria-label="Delete"
-            onClick={() => handleDelete(item.id)}
-          >
-            <DeleteIcon sx={{ color: "Red" }} />
-          </IconButton>
-
-          <IconButton edge="end" aria-label="Edit" onClick={() => handleUpdate}>
-            <ToDoModal
-              type="update"
-              modal={update}
-              setModal={setUpdate}
-              todo={item}
-            />
-          </IconButton>
-        </div>
-      }
-      disablePadding
-    >
+    <ListItem>
       <ListItemButton onClick={() => handleToggle(item)}>
         <ListItemIcon>
           <Checkbox
@@ -63,6 +41,37 @@ export default function ToDoItem({ item }) {
         </ListItemIcon>
         <ListItemText id={labelId} primary={item.text} secondary={item.time} />
       </ListItemButton>
+      <div className="todoIcons">
+        {/* <IconButton
+          className="todoicon"
+          edge="end"
+          aria-label="Delete"
+          onClick={() => handleDelete(item.id)}
+        > */}
+        <div className="todoicon">
+          <DeleteIcon
+            sx={{ color: "Red" }}
+            onClick={() => handleDelete(item.id)}
+          />
+        </div>
+        {/* </IconButton> */}
+
+        {/* <IconButton
+          className="todoicon"
+          edge="end"
+          aria-label="Edit"
+          onClick={() => handleUpdate}
+        > */}
+        <div className="todoicon" onClick={() => handleUpdate}>
+          <ToDoModal
+            type="update"
+            modal={update}
+            setModal={setUpdate}
+            todo={item}
+          />
+        </div>
+        {/* </IconButton> */}
+      </div>
     </ListItem>
   );
 }
