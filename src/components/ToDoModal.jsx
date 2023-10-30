@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React from "react";
 import PropTypes from "prop-types";
 import Backdrop from "@mui/material/Backdrop";
@@ -7,12 +7,12 @@ import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useSpring, animated } from "@react-spring/web";
-import { IconButton, Stack, TextField, Tooltip } from "@mui/material";
+import { Stack, TextField, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import EditIcon from "@mui/icons-material/Edit";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { toast } from "react-toastify";
 import { format } from "date-fns";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addTodo, updateTodo } from "../features/todoSlice";
 import { v4 as uuid } from "uuid";
 
@@ -59,20 +59,28 @@ Fade.propTypes = {
 
 const style = {
   position: "absolute",
-  top: "50%",
+  top: "40%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  borderRadius: "10px",
-  boxShadow: 24,
-  p: 4,
+  width: "30rem",
+  bgcolor: "#e3e1f1",
+  border: "none",
+  borderRadius: "12px",
+  boxShadow: "12px 18px 8px rgb(0,0,0, 0.2)",
+  padding: "1rem 1.5rem ",
 };
 
 export default function ToDoModal({ type, modal, setModal, todo }) {
   const dispatch = useDispatch();
   const [text, setText] = useState("");
+
+  useEffect(() => {
+    if (type === "update" && todo) {
+      setText(todo.text);
+    } else {
+      setText("");
+    }
+  }, [type, todo, modal]);
 
   const handleOpen = () => setModal(true);
   const handleClose = () => setModal(false);
@@ -119,12 +127,18 @@ export default function ToDoModal({ type, modal, setModal, todo }) {
 
   return (
     <div>
-      <Tooltip title={type === "add" ? "New Task" : "Edit Task"}>
-        <div style={{ display: "flex", alignItems: "center" }}>
+      <Tooltip title={type === "add" ? "" : "Edit Task"} arrow>
+        <div
+          className="clickBtn"
+          // style={{ display: "flex", alignItems: "center" }}
+          onClick={handleOpen}
+        >
           {type === "add" ? (
-            <AddIcon onClick={handleOpen} />
+            <button className="addBtn">
+              <AddIcon sx={{ color: "ghostwhite" }} fontSize="large" />
+            </button>
           ) : (
-            <EditIcon onClick={handleOpen} />
+            <EditOutlinedIcon />
           )}
         </div>
       </Tooltip>
@@ -145,24 +159,26 @@ export default function ToDoModal({ type, modal, setModal, todo }) {
         <Fade in={modal}>
           <Box sx={style}>
             <Typography id="spring-modal-title" variant="h6" component="h2">
-              {type === "add" ? "Add" : "Edit"} a ToDo
+              {type === "add" ? "Add a" : "Edit"} ToDo
             </Typography>
 
             <form onSubmit={handleSubmit}>
               <TextField
                 id="outlined-basic"
-                label="Enter new task"
                 variant="outlined"
+                autoFocus
+                fullWidth
                 value={text}
                 onChange={handleChange}
+                margin="dense"
               />
-              <Stack sx={{ mt: 2 }} spacing={1} direction="row">
-                <Button type="submit" color="primary" variant="contained">
+              <Stack sx={{ mt: 2 }} spacing={1.4} direction="row">
+                <Button type="submit" color="info" variant="contained">
                   Submit
                 </Button>
                 <Button
                   type="button"
-                  color="primary"
+                  color="info"
                   variant="outlined"
                   onClick={handleClose}
                 >

@@ -1,15 +1,13 @@
 import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
+import { useState } from "react";
 import ListItemText from "@mui/material/ListItemText";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import { Checkbox, IconButton, ListItemIcon } from "@mui/material";
+import DeleteForever from "@mui/icons-material/DeleteForever";
+import { Checkbox, Tooltip } from "@mui/material";
 import { updateTodo, deleteTodo } from "../features/todoSlice";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ToDoModal from "./ToDoModal";
-import { useState } from "react";
 
 export default function ToDoItem({ item }) {
   const [update, setUpdate] = useState(false);
@@ -27,41 +25,35 @@ export default function ToDoItem({ item }) {
     setUpdate(true);
   };
   return (
-    <ListItem>
-      <ListItemButton onClick={() => handleToggle(item)}>
-        <ListItemIcon>
-          <Checkbox
-            size="large"
-            edge="start"
-            checked={item.finished}
-            tabIndex={-1}
-            disableRipple
-            inputProps={{ "aria-labelledby": labelId }}
-          />
-        </ListItemIcon>
-        <ListItemText id={labelId} primary={item.text} secondary={item.time} />
-      </ListItemButton>
-      <div className="todoIcons">
-        {/* <IconButton
-          className="todoicon"
-          edge="end"
-          aria-label="Delete"
-          onClick={() => handleDelete(item.id)}
-        > */}
-        <div className="todoicon">
-          <DeleteIcon
-            sx={{ color: "Red" }}
-            onClick={() => handleDelete(item.id)}
-          />
-        </div>
-        {/* </IconButton> */}
+    <ListItem className="todoItem">
+      <Checkbox
+        onClick={() => handleToggle(item)}
+        id={labelId}
+        size="large"
+        edge="start"
+        checked={item.finished}
+        tabIndex={-1}
+        disableRipple
+        inputProps={{ "aria-labelledby": labelId }}
+      />
 
-        {/* <IconButton
-          className="todoicon"
-          edge="end"
-          aria-label="Edit"
-          onClick={() => handleUpdate}
-        > */}
+      <ListItemText
+        id="todoText"
+        className={item.finished ? "checkedText--finished" : "checkedText"}
+        primary={item.text}
+        secondary={item.time}
+      />
+
+      <div className="todoIcons">
+        <div className="todoicon">
+          <Tooltip title="delete task" arrow>
+            <DeleteForever
+              sx={{ color: "crimson" }}
+              onClick={() => handleDelete(item.id)}
+            />
+          </Tooltip>
+        </div>
+
         <div className="todoicon" onClick={() => handleUpdate}>
           <ToDoModal
             type="update"
@@ -70,7 +62,6 @@ export default function ToDoItem({ item }) {
             todo={item}
           />
         </div>
-        {/* </IconButton> */}
       </div>
     </ListItem>
   );

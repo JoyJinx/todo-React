@@ -1,5 +1,5 @@
 import { CssBaseline } from "@mui/material";
-import "../styles/App.css";
+import "../styles/App.scss";
 import AppNavBar from "./AppNavBar";
 import { ToastContainer } from "react-toastify";
 

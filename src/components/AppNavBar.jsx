@@ -1,29 +1,20 @@
-import { styled } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import Fab from "@mui/material/Fab";
 import ToDoItem from "./ToDoItem";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ToDoModal from "./ToDoModal";
 import { useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
-import { Container } from "@mui/material";
-
-const StyledFab = styled(Fab)({
-  position: "absolute",
-  zIndex: 1,
-  top: -50,
-  left: 800,
-  right: 0,
-  margin: "auto auto",
-});
 
 export default function AppNavBar() {
   const [open, setOpen] = useState(false);
   const todoList = useSelector((state) => state.todos.todoList);
+
+  const finishedTodos = todoList.filter((todo) => todo.finished === true);
+  const unfinishedTodos = todoList.filter((todo) => todo.finished === false);
+  const orderedList = [...unfinishedTodos, ...finishedTodos];
 
   const container = {
     hidden: { opacity: 1 },
@@ -46,33 +37,51 @@ export default function AppNavBar() {
   return (
     <div className="container">
       <Typography
-        variant="h4"
+        className="headerPage"
+        variant="h3"
         gutterBottom
         component="div"
         sx={{ p: 2, pb: 0 }}
       >
         Todos
       </Typography>
-      <motion.div variants={container} initial="hidden" animate="visible">
-        <Paper elevation={7} square={true} sx={{ mb: "50px" }}>
+      <motion.div
+        className="backPaper"
+        variants={container}
+        initial="hidden"
+        animate="visible"
+      >
+        <Paper className="paper" elevation={7}>
           <AnimatePresence>
             {todoList && todoList.length > 0 ? (
-              todoList.map((todo) => (
-                <motion.div key={todo.id} variants={child}>
-                  <ToDoItem key={todo.id} item={todo} />
+              orderedList.map((todo) => (
+                <motion.div
+                  key={todo.id}
+                  variants={child}
+                  initial="hidden"
+                  animate="visible"
+                  transition={{ duration: 1 }}
+                >
+                  <ToDoItem item={todo} />
                 </motion.div>
               ))
             ) : (
-              <motion.p variants={child}>Nothing to do!</motion.p>
+              <motion.p
+                style={{
+                  textAlign: "center",
+                  paddingBottom: "0.75rem",
+                }}
+                variants={child}
+              >
+                Nothing to do!
+              </motion.p>
             )}
           </AnimatePresence>
         </Paper>
       </motion.div>
       {/* <AppBar position="fixed" color="primary" sx={{ top: "auto", bottom: 0 }}> */}
       <Toolbar>
-        <StyledFab color="secondary" aria-label="add">
-          <ToDoModal type="add" modal={open} setModal={setOpen} />
-        </StyledFab>
+        <ToDoModal type="add" modal={open} setModal={setOpen} />
         <Box sx={{ flexGrow: 1 }} />
       </Toolbar>
       {/* </AppBar> */}
