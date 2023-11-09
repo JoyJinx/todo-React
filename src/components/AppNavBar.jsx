@@ -79,12 +79,10 @@ export default function AppNavBar() {
           </AnimatePresence>
         </Paper>
       </motion.div>
-      {/* <AppBar position="fixed" color="primary" sx={{ top: "auto", bottom: 0 }}> */}
       <Toolbar>
         <ToDoModal type="add" modal={open} setModal={setOpen} />
         <Box sx={{ flexGrow: 1 }} />
       </Toolbar>
-      {/* </AppBar> */}
     </div>
   );
 }

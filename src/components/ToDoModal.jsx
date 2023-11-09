@@ -8,6 +8,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useSpring, animated } from "@react-spring/web";
 import { Stack, TextField, Tooltip } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import AddIcon from "@mui/icons-material/Add";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { toast } from "react-toastify";
@@ -15,6 +16,14 @@ import { format } from "date-fns";
 import { useDispatch } from "react-redux";
 import { addTodo, updateTodo } from "../features/todoSlice";
 import { v4 as uuid } from "uuid";
+import { styled } from "@mui/material/styles";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Fab from "@mui/material/Fab";
+import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
+import MoreIcon from "@mui/icons-material/MoreVert";
 
 const Fade = React.forwardRef(function Fade(props, ref) {
   const {
@@ -74,6 +83,8 @@ export default function ToDoModal({ type, modal, setModal, todo }) {
   const dispatch = useDispatch();
   const [text, setText] = useState("");
 
+  const matches = useMediaQuery("(max-width:768px)");
+
   useEffect(() => {
     if (type === "update" && todo) {
       setText(todo.text);
@@ -125,6 +136,38 @@ export default function ToDoModal({ type, modal, setModal, todo }) {
     }
   };
 
+  const StyledFab = styled(Fab)({
+    position: "absolute",
+    zIndex: 1,
+    top: -34,
+    left: 0,
+    right: 0,
+    margin: "0 auto",
+    width: "6rem",
+    height: "6rem",
+  });
+
+  const mobileAppBar = () => {
+    return (
+      <AppBar
+        position="fixed"
+        color="primary"
+        sx={{
+          top: "auto",
+          bottom: 0,
+          height: "5rem",
+          borderRadius: "10px 10px 0 0",
+        }}
+      >
+        <Toolbar>
+          <StyledFab color="secondary" aria-label="add">
+            <AddIcon sx={{ fontSize: "3rem" }} />
+          </StyledFab>
+          <Box sx={{ flexGrow: 1 }} />
+        </Toolbar>
+      </AppBar>
+    );
+  };
   return (
     <div>
       <Tooltip title={type === "add" ? "" : "Edit Task"} arrow>
@@ -134,9 +177,13 @@ export default function ToDoModal({ type, modal, setModal, todo }) {
           onClick={handleOpen}
         >
           {type === "add" ? (
-            <button className="addBtn">
-              <AddIcon sx={{ color: "ghostwhite" }} fontSize="large" />
-            </button>
+            matches ? (
+              mobileAppBar()
+            ) : (
+              <button className="addBtn">
+                <AddIcon sx={{ color: "ghostwhite" }} fontSize="large" />
+              </button>
+            )
           ) : (
             <EditOutlinedIcon />
           )}
