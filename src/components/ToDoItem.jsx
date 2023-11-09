@@ -25,7 +25,7 @@ export default function ToDoItem({ item }) {
     setUpdate(true);
   };
   return (
-    <ListItem className="todoItem">
+    <ListItem sx={{ paddingRight: "0" }} className="todoItem">
       <Checkbox
         onClick={() => handleToggle(item)}
         id={labelId}
@@ -38,6 +38,12 @@ export default function ToDoItem({ item }) {
       />
 
       <ListItemText
+        sx={{
+          width: "100%",
+          textAlign: "start",
+          unicodeBidi: "plaintext",
+          height: "auto",
+        }}
         id="todoText"
         className={item.finished ? "checkedText--finished" : "checkedText"}
         primary={item.text}

@@ -9,7 +9,17 @@ $primaryColor: #8739f9;
   width: 100%;
   display: flex;
   flex-direction: column;
-  place-items: center;
+  align-items: center;
+  .backPaper {
+    width: 60%;
+    align-self: center;
+    .paper {
+      background-color: #eaddff;
+      border: none;
+      border-radius: 12px;
+      padding: 1.25rem 1.25rem 0.25rem;
+    }
+  }
 }
 
 .headerPage {
@@ -17,16 +27,6 @@ $primaryColor: #8739f9;
   margin: 0.5rem 0 0.75rem 0 !important;
   color: #16688b;
   font-family: monospace;
-}
-
-.backPaper {
-  .paper {
-    min-width: 60vw;
-    background-color: #eaddff;
-    border: none;
-    border-radius: 12px;
-    padding: 1rem 1.25rem 0.25rem;
-  }
 }
 
 .todoItem {
@@ -38,12 +38,10 @@ $primaryColor: #8739f9;
 }
 
 .todoIcons {
-  width: 10%;
+  width: auto;
   display: flex;
-  flex-direction: row;
   justify-items: space-between;
-  position: absolute;
-  right: 1rem;
+  margin: 0 0.25rem 0 0.4rem;
 }
 .todoicon {
   display: flex;
@@ -61,9 +59,7 @@ $primaryColor: #8739f9;
 }
 
 #todoText {
-  position: absolute;
-
-  left: 4rem;
+  position: relative;
 }
 
 .clickBtn {
@@ -74,16 +70,19 @@ $primaryColor: #8739f9;
   display: flex;
   position: fixed;
   bottom: 10vh;
-  right: 7vw;
+  right: 6vw;
   justify-content: center;
   align-items: center;
-  width: 4rem;
-  height: 4rem;
+  width: 5rem;
+  height: 5rem;
   border: none;
   border-radius: 100%;
   cursor: pointer;
   background-color: #16688b;
   transition: 0.5s;
+  & svg {
+    font-size: 3rem;
+  }
 }
 .addBtn:hover {
   scale: 1.2;

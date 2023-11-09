@@ -19,43 +19,41 @@
 }
 html {
   font-size: 1rem;
+  font-family: "Ubuntu", sans-serif;
 }
 body {
-  font-family: "Poppins", sans-serif;
   width: 100%;
   min-height: 100vh;
   /* background-color: var(--primaryPurple) !important; */
   background: linear-gradient(180deg, #a6daec 0%, #ccadfa 100%);
-}
-* {
-  font-family: "Poppins", sans-serif;
 }
 /* .container {
   width: 90%;
   max-width: 1200px;
   margin: 0 auto;
 } */
-@media screen and (max-width: 1300px) {
+/* @media screen and (max-width: 1300px) {
   .todoIcons {
     right: 4rem;
   }
-}
+} */
 
 @media screen and (max-width: 768px) {
   html {
     font-size: 0.75rem;
   }
-
-  .paper {
-    width: 85vw;
-  }
-  .todoIcons {
-    right: 3rem;
+  .container {
+    .backPaper {
+      width: 70vw;
+    }
   }
   .addBtn {
-    width: 7rem;
-    height: 7rem;
+    width: 16vw;
+    height: 16vw;
     right: -2rem;
     bottom: -2.5rem;
+    & svg {
+      font-size: 4rem;
+    }
   }
 }
