@@ -139,12 +139,12 @@ export default function ToDoModal({ type, modal, setModal, todo }) {
   const StyledFab = styled(Fab)({
     position: "absolute",
     zIndex: 1,
-    top: -34,
+    top: -40,
     left: 0,
     right: 0,
     margin: "0 auto",
-    width: "6rem",
-    height: "6rem",
+    width: "6.6rem",
+    height: "6.6rem",
   });
 
   const mobileAppBar = () => {
@@ -155,8 +155,8 @@ export default function ToDoModal({ type, modal, setModal, todo }) {
         sx={{
           top: "auto",
           bottom: 0,
-          height: "5rem",
-          borderRadius: "10px 10px 0 0",
+          height: "6.4rem",
+          borderRadius: "16px 16px 0 0",
         }}
       >
         <Toolbar>
@@ -171,11 +171,7 @@ export default function ToDoModal({ type, modal, setModal, todo }) {
   return (
     <div>
       <Tooltip title={type === "add" ? "" : "Edit Task"} arrow>
-        <div
-          className="clickBtn"
-          // style={{ display: "flex", alignItems: "center" }}
-          onClick={handleOpen}
-        >
+        <div className="clickBtn" onClick={handleOpen}>
           {type === "add" ? (
             matches ? (
               mobileAppBar()

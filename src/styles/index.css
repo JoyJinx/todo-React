@@ -24,7 +24,6 @@ html {
 body {
   width: 100%;
   min-height: 100vh;
-  /* background-color: var(--primaryPurple) !important; */
   background: linear-gradient(180deg, #a6daec 0%, #ccadfa 100%);
 }
 /* .container {
@@ -32,19 +31,14 @@ body {
   max-width: 1200px;
   margin: 0 auto;
 } */
-/* @media screen and (max-width: 1300px) {
-  .todoIcons {
-    right: 4rem;
-  }
-} */
 
 @media screen and (max-width: 768px) {
   html {
-    font-size: 0.75rem;
+    font-size: 0.85rem;
   }
   .container {
     .backPaper {
-      width: 70vw;
+      width: 80vw;
     }
   }
   .addBtn {
