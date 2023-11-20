@@ -19,22 +19,10 @@ import { v4 as uuid } from "uuid";
 import { styled } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
 import Fab from "@mui/material/Fab";
-import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
-import MoreIcon from "@mui/icons-material/MoreVert";
 
 const Fade = React.forwardRef(function Fade(props, ref) {
-  const {
-    children,
-    in: open,
-    onClick,
-    onEnter,
-    onExited,
-    ownerState,
-    ...other
-  } = props;
+  const { children, in: open, onClick, onEnter, onExited, ...other } = props;
   const style = useSpring({
     from: { opacity: 0 },
     to: { opacity: open ? 1 : 0 },
@@ -63,7 +51,6 @@ Fade.propTypes = {
   onClick: PropTypes.any,
   onEnter: PropTypes.func,
   onExited: PropTypes.func,
-  ownerState: PropTypes.any,
 };
 
 const style = {
@@ -92,6 +79,13 @@ export default function ToDoModal({ type, modal, setModal, todo }) {
       setText("");
     }
   }, [type, todo, modal]);
+
+  ToDoModal.propTypes = {
+    type: PropTypes.string,
+    modal: PropTypes.object,
+    setModal: PropTypes.func,
+    todo: PropTypes.object,
+  };
 
   const handleOpen = () => setModal(true);
   const handleClose = () => setModal(false);
